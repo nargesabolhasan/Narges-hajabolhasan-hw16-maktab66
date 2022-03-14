@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modals } from '../Modal/Modal';
 
 
-const Signin = (props) => {
+const Signin = ({parentCallback}) => {
     //**state for inputs **//
     const [user, setUser] = useState(
         {
@@ -27,7 +27,7 @@ const Signin = (props) => {
     const handleShow = () => setShow(true);
     const handleClose = () => {
         setShow(false)
-        window.location.reload(false);
+        // window.location.reload(false);
     };
 
     //------handleSubmit------
@@ -38,13 +38,27 @@ const Signin = (props) => {
             event.stopPropagation();
         } else {
             handleShow()
+            parentCallback(user)
+            setUser(
+                {
+                    firstName: '',
+                    lastName: '',
+                    email: '',
+                    pasword: '',
+                    education: '',
+                    locOfEducation: '',
+                    city: '',
+                    locOfBirth: ''
+                }
+            )
+            
         }
         setValidated(true);
     };
 
     return (
         <div className="col-10 mx-auto">
-            <h1 className="text-center">خوش آمدید</h1>
+            <h1 className="text-center">رایگان ثبت نام کنید  </h1>
             <Form
                 className='text-end'
                 noValidate

@@ -3,7 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modals } from '../Modal/Modal';
 
-const Login = () => {
+const Login = ({parentCallback} ) => {
     const [value, setValue] = useState({
         email: '',
         password: ''
@@ -12,7 +12,10 @@ const Login = () => {
         <div className="col-10 mx-auto">
             <h1 className="text-center">خوش آمدید</h1>
             <Form
-
+                onSubmit={(e) => {
+                    e.preventDefault()
+                    parentCallback(value);
+                  }}
             >
                 <Form.Group className="mb-3" >
                     <Form.Control
@@ -35,7 +38,7 @@ const Login = () => {
                     />
                 </Form.Group>
                 <Button className="col-12" variant="primary" type="submit">
-                    Submit
+                    ورود
                 </Button>
             </Form>
         </div>
