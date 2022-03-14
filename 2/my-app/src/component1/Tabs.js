@@ -3,6 +3,7 @@ import TabsItem from './TabsItem';
 import TabsList from './TabsList';
 import TabsContent from './TabsContent';
 import Signin from './Signin&Login/Signin';
+import Login from './Signin&Login/Login';
 
 const Tabs = () => {
     const [data, setData] = useState([
@@ -18,10 +19,11 @@ const Tabs = () => {
     //
     return (
         <div>
-            <TabsContent tabId='0' activeTab={selectedTAb}>Login</TabsContent>
+            <TabsContent tabId='0' activeTab={selectedTAb}>
+               <Login/>
+            </TabsContent>
             <TabsContent tabId='1' activeTab={selectedTAb}>
-                رایگان ثبت نام کنید
-                <Signin />
+                <Signin/>
              </TabsContent>
             <TabsList>
                 {data.map((item, index) => (

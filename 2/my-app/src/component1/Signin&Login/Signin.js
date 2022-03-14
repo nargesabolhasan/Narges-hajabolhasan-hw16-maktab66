@@ -20,12 +20,15 @@ const Signin = (props) => {
     )
     //**state for validation form **//
     const [validated, setValidated] = useState(false);
-     //**state for modal **//
+    //**state for modal **//
     const [show, setShow] = useState(false);
-    
+
     //-----show & clouse modal-------
     const handleShow = () => setShow(true);
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+        setShow(false)
+        window.location.reload(false);
+    };
 
     //------handleSubmit------
     const handleSubmit = (event) => {
@@ -33,22 +36,25 @@ const Signin = (props) => {
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
             event.stopPropagation();
-        }else{
+        } else {
             handleShow()
         }
         setValidated(true);
     };
 
     return (
-        <div>
+        <div className="col-10 mx-auto">
+            <h1 className="text-center">خوش آمدید</h1>
             <Form
+                className='text-end'
                 noValidate
                 validated={validated}
-                onSubmit={(e)=>handleSubmit(e)}
+                onSubmit={(e) => handleSubmit(e)}
             >
-                <div className="d-flex flex-row">
-                    <Form.Group className="mb-3 col-6" >
+                <div className="d-flex flex-row justify-content-center">
+                    <Form.Group className="mb-3 me-1 col-6" >
                         <Form.Control
+                            className="text-end"
                             type="text"
                             placeholder="نام خانوادگی"
                             value={user.lastName}
@@ -58,6 +64,7 @@ const Signin = (props) => {
                     </Form.Group>
                     <Form.Group className="mb-3 col-6" >
                         <Form.Control
+                            className="text-end"
                             type="text"
                             placeholder="نام "
                             value={user.firstName}
@@ -68,6 +75,7 @@ const Signin = (props) => {
                 </div>
                 <Form.Group className="mb-3" >
                     <Form.Control
+                        className="text-end"
                         type="email"
                         placeholder="پست الکترونیک"
                         value={user.email}
@@ -77,6 +85,7 @@ const Signin = (props) => {
                 </Form.Group>
                 <Form.Group className="mb-3" >
                     <Form.Control
+                        className="text-end"
                         type="password"
                         value={user.pasword}
                         placeholder="کلمه عبور"
@@ -87,6 +96,7 @@ const Signin = (props) => {
                 <Form.Group className="mb-3" >
                     <Form.Label>محل سکونت</Form.Label>
                     <Form.Select
+                        className="text-end"
                         required
                         onChange={(e) => setUser(prev => ({ ...prev, city: e.target.value }))}
                     >
@@ -98,6 +108,7 @@ const Signin = (props) => {
                 <Form.Group className="mb-3" >
                     <Form.Label>محل تولد</Form.Label>
                     <Form.Select
+                        className="text-end"
                         onChange={(e) => setUser(prev => ({ ...prev, locOfBirth: e.target.value }))}
                         required
                     >
@@ -109,7 +120,9 @@ const Signin = (props) => {
 
                 <Form.Group className="mb-3" >
                     <Form.Label>مدرک تحصیلی</Form.Label>
-                    <Form.Select onChange={(e) => setUser(prev => ({ ...prev, education: e.target.value }))} >
+                    <Form.Select
+                        className="text-end"
+                        onChange={(e) => setUser(prev => ({ ...prev, education: e.target.value }))} >
                         <option>محل تحصیل</option>
                         <option>م تحصیل</option>
                     </Form.Select>
@@ -117,6 +130,7 @@ const Signin = (props) => {
                 <Form.Group className="mb-3" >
                     <Form.Label>محل تحصیل</Form.Label>
                     <Form.Select
+                        className="text-end"
                         onChange={(e) => setUser(prev => ({ ...prev, locOfEducation: e.target.value }))}
                         required>
                         <option ></option>
@@ -125,17 +139,18 @@ const Signin = (props) => {
                     </Form.Select>
                 </Form.Group>
 
-                <Button variant="primary" type="submit">
+                <Button className="col-12" variant="primary" type="submit">
                     ثبت نام
                 </Button>
             </Form>
             <Modals
-             handleShow={handleShow}
-             handleClose={handleClose}
-             show={show}
-             />
+                handleShow={() => handleShow()}
+                handleClose={() => handleClose()}
+                show={show}
+                massages="ثبت نام با موفقیت انجام شد"
+            />
         </div>
     )
-    }
+}
 
 export default Signin
