@@ -1,10 +1,20 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect, useRef } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modals } from '../Modal/Modal';
 
 
-const Signin = ({parentCallback}) => {
+const Signin = ({ parentCallback }) => {
+    //..........declared ref..........//
+    const selectInput2 = useRef(null);
+    //**state for validation form **//
+    const [city, setCity] = useState({});
+    //**state for selected city **//
+    const [cityState, setCityState] = useState([]);
+    //**state for validation form **//
+    const [validated, setValidated] = useState(false);
+    //**state for modal **//
+    const [show, setShow] = useState(false);
     //**state for inputs **//
     const [user, setUser] = useState(
         {
@@ -18,18 +28,12 @@ const Signin = ({parentCallback}) => {
             locOfBirth: ''
         }
     )
-    //**state for validation form **//
-    const [validated, setValidated] = useState(false);
-    //**state for modal **//
-    const [show, setShow] = useState(false);
-
     //-----show & clouse modal-------
     const handleShow = () => setShow(true);
     const handleClose = () => {
         setShow(false)
         // window.location.reload(false);
     };
-
     //------handleSubmit------
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -51,10 +55,29 @@ const Signin = ({parentCallback}) => {
                     locOfBirth: ''
                 }
             )
-            
         }
         setValidated(true);
     };
+    //--------fetch----------
+    useEffect(() => {
+        fetch("./iranstates.json")
+            .then((response) => response.json())
+            .then(data => setCity(data))
+    }, [])
+    //------change options of select tag-----------
+    const selectCityState = (e) => {
+        let cityList = e.target;
+        let stateOfCity = selectInput2.current
+        let selectedCity = cityList.options[cityList.selectedIndex].index;
+        while (stateOfCity.options.length) {
+            stateOfCity.remove(0);
+        }
+        let stateOfSelectedCity = Object.values(city)[selectedCity];
+        if (stateOfSelectedCity) {
+            setCityState(stateOfSelectedCity)
+        }
+    }
+
 
     return (
         <div className="col-10 mx-auto">
@@ -108,17 +131,34 @@ const Signin = ({parentCallback}) => {
                     />
                 </Form.Group>
                 <Form.Group className="mb-3" >
-                    <Form.Label>محل سکونت</Form.Label>
+                    <Form.Label>استان</Form.Label>
                     <Form.Select
                         className="text-end"
                         required
-                        onChange={(e) => setUser(prev => ({ ...prev, city: e.target.value }))}
+                        onChange={(e) => {
+                            selectCityState(e)
+                            setUser(prev => ({ ...prev, city: e.target.value }))
+                        }
+                        }
                     >
-                        <option ></option>
-                        <option >محل تحصیل</option>
-                        <option>م تحصیل</option>
+                        {Object.keys(city).map((item, i) => {
+                            return <option key={i}>{item}</option>
+                        })}
                     </Form.Select >
                 </Form.Group>
+                <Form.Group className="mb-3" >
+                    <Form.Label>شهرستان</Form.Label>
+                    <Form.Select
+                        ref={selectInput2}
+                        className="text-end"
+                        onChange={(e) => setUser(prev => ({ ...prev, education: e.target.value }))} >
+                        <option></option>
+                        {cityState.map((item, index) => (
+                            <option key={index}>{item}</option>
+                        ))}
+                    </Form.Select >
+                </Form.Group>
+
                 <Form.Group className="mb-3" >
                     <Form.Label>محل تولد</Form.Label>
                     <Form.Select
@@ -137,6 +177,7 @@ const Signin = ({parentCallback}) => {
                     <Form.Select
                         className="text-end"
                         onChange={(e) => setUser(prev => ({ ...prev, education: e.target.value }))} >
+                        <option></option>
                         <option>محل تحصیل</option>
                         <option>م تحصیل</option>
                     </Form.Select>
@@ -147,12 +188,10 @@ const Signin = ({parentCallback}) => {
                         className="text-end"
                         onChange={(e) => setUser(prev => ({ ...prev, locOfEducation: e.target.value }))}
                         required>
-                        <option ></option>
-                        <option>محل تحصیل</option>
-                        <option>م تحصیل</option>
+                        <option>g</option>
+                        <option>j</option>
                     </Form.Select>
                 </Form.Group>
-
                 <Button className="col-12" variant="primary" type="submit">
                     ثبت نام
                 </Button>
