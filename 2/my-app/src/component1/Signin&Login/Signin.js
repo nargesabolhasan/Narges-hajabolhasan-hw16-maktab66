@@ -2,6 +2,7 @@ import { React, useState, useEffect, useRef } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modals } from '../Modal/Modal';
+import ShowPassword from '../ShowPassword/ShowPassword';
 
 
 const Signin = ({ parentCallback }) => {
@@ -15,6 +16,8 @@ const Signin = ({ parentCallback }) => {
     const [validated, setValidated] = useState(false);
     //**state for modal **//
     const [show, setShow] = useState(false);
+    //**state for select tag  **//
+    const [showTag, setShowTag] = useState(false);
     //**state for inputs **//
     const [user, setUser] = useState(
         {
@@ -77,13 +80,15 @@ const Signin = ({ parentCallback }) => {
             setCityState(stateOfSelectedCity)
         }
     }
-
-
+    //------open select tag-----------
+    const openSelectTag=()=>{
+        setShowTag(true)
+    }
     return (
-        <div className="col-10 mx-auto">
+        <div className="col-8 mx-auto">
             <h1 className="text-center">رایگان ثبت نام کنید  </h1>
             <Form
-                className='text-end'
+                className='text-end '
                 noValidate
                 validated={validated}
                 onSubmit={(e) => handleSubmit(e)}
@@ -91,7 +96,7 @@ const Signin = ({ parentCallback }) => {
                 <div className="d-flex flex-row justify-content-center">
                     <Form.Group className="mb-3 me-1 col-6" >
                         <Form.Control
-                            className="text-end"
+                            className="text-end inputs text-white"
                             type="text"
                             placeholder="نام خانوادگی"
                             value={user.lastName}
@@ -101,7 +106,7 @@ const Signin = ({ parentCallback }) => {
                     </Form.Group>
                     <Form.Group className="mb-3 col-6" >
                         <Form.Control
-                            className="text-end"
+                            className="text-end inputs text-white"
                             type="text"
                             placeholder="نام "
                             value={user.firstName}
@@ -112,7 +117,7 @@ const Signin = ({ parentCallback }) => {
                 </div>
                 <Form.Group className="mb-3" >
                     <Form.Control
-                        className="text-end"
+                        className="text-end inputs text-white"
                         type="email"
                         placeholder="پست الکترونیک"
                         value={user.email}
@@ -120,20 +125,14 @@ const Signin = ({ parentCallback }) => {
                         required
                     />
                 </Form.Group>
-                <Form.Group className="mb-3" >
-                    <Form.Control
-                        className="text-end"
-                        type="password"
-                        value={user.pasword}
-                        placeholder="کلمه عبور"
-                        onChange={(e) => setUser(prev => ({ ...prev, pasword: e.target.value }))}
-                        required
-                    />
-                </Form.Group>
-                <Form.Group className="mb-3" >
-                    <Form.Label>استان</Form.Label>
+                <ShowPassword
+                    value={user.pasword}
+                    onChange={(e) => setUser(prev => ({ ...prev, pasword: e.target.value }))
+                    } />
+                <Form.Group className="mb-3 " >
+                    <Form.Label className="text-white fs-5">استان</Form.Label>
                     <Form.Select
-                        className="text-end"
+                        className="text-end inputs text-white"
                         required
                         onChange={(e) => {
                             selectCityState(e)
@@ -141,18 +140,19 @@ const Signin = ({ parentCallback }) => {
                         }
                         }
                     >
+                         <option selected></option>
                         {Object.keys(city).map((item, i) => {
                             return <option key={i}>{item}</option>
                         })}
                     </Form.Select >
                 </Form.Group>
                 <Form.Group className="mb-3" >
-                    <Form.Label>شهرستان</Form.Label>
+                    <Form.Label className="text-white fs-5">شهرستان</Form.Label>
                     <Form.Select
                         ref={selectInput2}
-                        className="text-end"
+                        className="text-end inputs text-white"
                         onChange={(e) => setUser(prev => ({ ...prev, education: e.target.value }))} >
-                        <option></option>
+                        <option selected></option>
                         {cityState.map((item, index) => (
                             <option key={index}>{item}</option>
                         ))}
@@ -160,39 +160,48 @@ const Signin = ({ parentCallback }) => {
                 </Form.Group>
 
                 <Form.Group className="mb-3" >
-                    <Form.Label>محل تولد</Form.Label>
+                    <Form.Label className="text-white fs-5">محل تولد</Form.Label>
                     <Form.Select
-                        className="text-end"
+                        className="text-end inputs text-white"
                         onChange={(e) => setUser(prev => ({ ...prev, locOfBirth: e.target.value }))}
                         required
                     >
-                        <option ></option>
-                        <option>محل تحصیل</option>
-                        <option>م تحصیل</option>
+                        <option selected></option>
+                        {Object.keys(city).map((item, i) => {
+                            return <option key={i}>{item}</option>
+                        })}
                     </Form.Select>
                 </Form.Group>
 
                 <Form.Group className="mb-3" >
-                    <Form.Label>مدرک تحصیلی</Form.Label>
+                    <Form.Label className="text-white fs-5">مدرک تحصیلی</Form.Label>
                     <Form.Select
-                        className="text-end"
-                        onChange={(e) => setUser(prev => ({ ...prev, education: e.target.value }))} >
+                        className="text-end inputs text-white"
+                        onChange={(e) => {
+                            openSelectTag()
+                            setUser(prev => ({ ...prev, education: e.target.value }))}
+                            } >
                         <option></option>
-                        <option>محل تحصیل</option>
-                        <option>م تحصیل</option>
+                        <option>دیپلم</option>
+                        <option> کارشناسی پیوسته </option>
+                        <option>کارشناسی ناپیوسته </option>
+                        <option> کارشناسی ارشد </option>
+                        <option>دکتری </option>
                     </Form.Select>
                 </Form.Group>
-                <Form.Group className="mb-3" >
-                    <Form.Label>محل تحصیل</Form.Label>
+                {showTag && <Form.Group className="mb-3" >
+                    <Form.Label className="text-white fs-5">محل تحصیل</Form.Label>
                     <Form.Select
-                        className="text-end"
+                        className="text-end inputs text-white"
                         onChange={(e) => setUser(prev => ({ ...prev, locOfEducation: e.target.value }))}
                         required>
-                        <option>g</option>
-                        <option>j</option>
+                        <option selected></option>
+                        {Object.keys(city).map((item, i) => {
+                            return <option className="inputs" key={i}>{item}</option>
+                        }) }
                     </Form.Select>
-                </Form.Group>
-                <Button className="col-12" variant="primary" type="submit">
+                </Form.Group>}
+                <Button className="col-12 buttons" variant="primary" type="submit">
                     ثبت نام
                 </Button>
             </Form>
