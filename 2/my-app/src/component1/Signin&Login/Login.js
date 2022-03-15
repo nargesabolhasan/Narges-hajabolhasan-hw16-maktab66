@@ -1,13 +1,19 @@
 import { React, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Modals } from '../Modal/Modal';
+import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 
-const Login = ({parentCallback} ) => {
+const Login = ({ parentCallback }) => {
     const [value, setValue] = useState({
         email: '',
         password: ''
     })
+    const [passwordShown, setPasswordShown] = useState(false);
+    //
+    const togglePassword = () => {
+        setPasswordShown(!passwordShown);
+    };
+    //
     return (
         <div className="col-10 mx-auto">
             <h1 className="text-center">خوش آمدید</h1>
@@ -15,7 +21,7 @@ const Login = ({parentCallback} ) => {
                 onSubmit={(e) => {
                     e.preventDefault()
                     parentCallback(value);
-                  }}
+                }}
             >
                 <Form.Group className="mb-3" >
                     <Form.Control
@@ -27,15 +33,22 @@ const Login = ({parentCallback} ) => {
                         required
                     />
                 </Form.Group>
-                <Form.Group className="mb-3" >
+                <Form.Group className="mb-3 d-flex flex-row" >
                     <Form.Control
                         className="text-end"
-                        type="password"
+                        type={passwordShown ? "text" : "password"}
                         value={value.password}
                         placeholder="کلمه عبور"
                         onChange={(e) => setValue(prev => ({ ...prev, password: e.target.value }))}
                         required
                     />
+                    <span 
+                    className="p-2 border border-secondary fs-5"
+                    onClick={togglePassword}>
+                        {!passwordShown && <IoEyeOffOutline onClick={togglePassword}/>}
+                        {passwordShown && <IoEyeOutline onClick={togglePassword}/>}
+                    </span>
+
                 </Form.Group>
                 <Button className="col-12" variant="primary" type="submit">
                     ورود
@@ -44,5 +57,6 @@ const Login = ({parentCallback} ) => {
         </div>
     )
 }
+//BsEyeFill
 
 export default Login
