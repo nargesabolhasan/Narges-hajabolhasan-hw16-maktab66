@@ -1,9 +1,10 @@
-import { React,useState,useCallback} from 'react';
+import { React, useState, useEffect, useCallback } from 'react';
 import TabsItem from './TabsItem';
 import TabsList from './TabsList';
 import TabsContent from './TabsContent';
 import Signin from './Signin&Login/Signin';
 import Login from './Signin&Login/Login';
+import { Modals } from './Modal/Modal';
 
 const Tabs = () => {
     const [data, setData] = useState([
@@ -16,27 +17,52 @@ const Tabs = () => {
     // 
     const [selectedTAb, setselectedTAb] = useState(0)
     //
+    //**state for modal **//
+    const [show, setShow] = useState(false);
+    //**state for text of modal **//
+    const [modalText, setModalText] = useState('');
+       //**state for text of modal **//
+       const [modalStyle, setModalStyle] = useState('');
     const handleClick = (index) => {
         setselectedTAb(index)
     }
     //
     const handleLogin = useCallback((input) => {
-        const newLogin = [...login,input];
-        setLogin(newLogin);
-        checked()
-      });
+        setLogin(input);
+        checkUser()
+        
+    });
+    //
+    const checkUser=()=>{
+        signin.map((item, index) => {
+            // item.includes(login.password)?console.log('y'):console.log('n')
+            let arrayOfSignin = Object.values(item)
+            arrayOfSignin.includes(login.password) && arrayOfSignin.includes(login.email)?
+             handleShow('موفقیت','succsess') : handleShow('شکست','failer')
+
+        })
+    }
+    //-----show & clouse modal-------
+    const handleShow = (text,style) => {
+        setShow(true)
+        setModalText(text)
+        setModalStyle(style)
+    }
 
     //
-    const checked=()=>{
-        console.log(signin)
-        console.log(login)
-    }
-    //
+ 
     const handleSignin = useCallback((input) => {
         const newSignin = [...signin, input];
         setSignin(newSignin);
-      });
+    });
     //
+    const handleClose = () => {
+        setShow(false)
+        // window.location.reload(false);
+    };
+    useEffect(() => {
+        checkUser()
+    }, [login])
     return (
         <div>
             <TabsList>
@@ -49,11 +75,18 @@ const Tabs = () => {
                 ))}
             </TabsList>
             <TabsContent tabId='0' activeTab={selectedTAb}>
-                <Login parentCallback={handleLogin}/>
+                <Login parentCallback={handleLogin} />
             </TabsContent>
             <TabsContent tabId='1' activeTab={selectedTAb}>
-                <Signin parentCallback={handleSignin}/>
+                <Signin parentCallback={handleSignin} />
             </TabsContent>
+            <Modals
+                handleShow={() => handleShow()}
+                handleClose={() => handleClose()}
+                show={show}
+                massages={modalText}
+                className={modalStyle}
+            />
         </div>
     );
 };

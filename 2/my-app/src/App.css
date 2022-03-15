@@ -28,3 +28,19 @@
 .activeTab{
     border-bottom:3px solid rgb(195, 21, 21);
 }
+.succsess{
+    color:green;
+    font-size:30px;
+}
+.succsess::before{
+    content:'\2714';
+    color:green;
+}
+.failer{
+    color:red;
+    font-size:30px;
+}
+.failer::before{
+    content:'\2717';
+    color:red;
+}
