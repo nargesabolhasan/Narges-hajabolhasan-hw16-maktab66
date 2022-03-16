@@ -1,0 +1,16 @@
+.App {
+  margin-top: 100px;
+  margin-left: 100px;
+  font-size:30px;
+}
+
+.value-1{ 
+  margin-bottom: 100px;
+  background-color:greenyellow;
+  padding:10px;
+}
+.value-2{ 
+  margin-bottom: 100px;
+  background-color:rgb(47, 206, 255);
+  padding:10px;
+}
