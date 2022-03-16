@@ -1,16 +1,18 @@
-import { React, useState } from 'react';
+import { React, memo } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-export const Modals = (props) => {
-    const { handleShow, handleClose, show ,massages,className} = props
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+    const Modals = (props) => {
+    const { handleShow, handleClose, show ,className,bodyMassages} = props
     return (
         <>
             <Modal show={show} onHide={handleShow}>
                 <Modal.Header >
-                    <Modal.Title>Modal heading</Modal.Title>
+                    <Modal.Title className={className} ></Modal.Title>
                 </Modal.Header>
-                <Modal.Body className={className}>{massages}</Modal.Body>
+                <Modal.Body className="text-center" >{bodyMassages}</Modal.Body>
                 <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
+                <Button variant="primary" onClick={handleClose}>
                         Close
                     </Button>
                 </Modal.Footer>
@@ -18,5 +20,7 @@ export const Modals = (props) => {
         </>
     );
 }
+
+export default memo(Modals);
 
 

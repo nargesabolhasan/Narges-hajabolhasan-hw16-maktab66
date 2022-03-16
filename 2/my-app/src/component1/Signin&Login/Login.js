@@ -34,7 +34,7 @@ const Login = ({ parentCallback }) => {
                     onChange={(e) => setValue(prev => ({ ...prev, password: e.target.value }))
                     } />
 
-                    <a href="#" className="forget">فراموش کردید؟</a>
+                    <Button className="forget ">فراموش کردید؟</Button>
                 <Button className="col-12 buttons" variant="primary" type="submit">
                     ورود
                 </Button>
@@ -42,6 +42,5 @@ const Login = ({ parentCallback }) => {
         </div>
     )
 }
-//onChange={(e) => setValue(prev => ({ ...prev, password: e.target.value }))}
 
 export default Login

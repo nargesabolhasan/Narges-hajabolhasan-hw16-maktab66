@@ -1,4 +1,4 @@
-import React from 'react';
+import {React,memo} from 'react';
 
 const TabsContent = (props) => {
     const{children,tabId,activeTab}=props;
@@ -12,4 +12,4 @@ const TabsContent = (props) => {
     );
 };
 
-export default TabsContent;
+export default memo(TabsContent);

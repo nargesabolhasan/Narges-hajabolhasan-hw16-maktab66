@@ -1,7 +1,7 @@
 import { React, useState, useEffect, useRef } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Modals } from '../Modal/Modal';
+import  Modals from '../Modal/Modal';
 import ShowPassword from '../ShowPassword/ShowPassword';
 
 
@@ -55,7 +55,7 @@ const Signin = ({ parentCallback }) => {
                     education: '',
                     locOfEducation: '',
                     city: '',
-                    locOfBirth: ''
+                    locOfBirth:''
                 }
             )
         }
@@ -96,7 +96,7 @@ const Signin = ({ parentCallback }) => {
                 <div className="d-flex flex-row justify-content-center">
                     <Form.Group className="mb-3 me-1 col-6" >
                         <Form.Control
-                            className="text-end inputs text-white"
+                            className="text-end inputs"
                             type="text"
                             placeholder="نام خانوادگی"
                             value={user.lastName}
@@ -106,7 +106,7 @@ const Signin = ({ parentCallback }) => {
                     </Form.Group>
                     <Form.Group className="mb-3 col-6" >
                         <Form.Control
-                            className="text-end inputs text-white"
+                            className="text-end inputs"
                             type="text"
                             placeholder="نام "
                             value={user.firstName}
@@ -117,7 +117,7 @@ const Signin = ({ parentCallback }) => {
                 </div>
                 <Form.Group className="mb-3" >
                     <Form.Control
-                        className="text-end inputs text-white"
+                        className="text-end inputs"
                         type="email"
                         placeholder="پست الکترونیک"
                         value={user.email}
@@ -132,7 +132,7 @@ const Signin = ({ parentCallback }) => {
                 <Form.Group className="mb-3 " >
                     <Form.Label className="text-white fs-5">استان</Form.Label>
                     <Form.Select
-                        className="text-end inputs text-white"
+                        className="text-end inputs"
                         required
                         onChange={(e) => {
                             selectCityState(e)
@@ -140,7 +140,7 @@ const Signin = ({ parentCallback }) => {
                         }
                         }
                     >
-                         <option selected></option>
+                         <option defaultValue></option>
                         {Object.keys(city).map((item, i) => {
                             return <option key={i}>{item}</option>
                         })}
@@ -150,9 +150,9 @@ const Signin = ({ parentCallback }) => {
                     <Form.Label className="text-white fs-5">شهرستان</Form.Label>
                     <Form.Select
                         ref={selectInput2}
-                        className="text-end inputs text-white"
+                        className="text-end inputs"
                         onChange={(e) => setUser(prev => ({ ...prev, education: e.target.value }))} >
-                        <option selected></option>
+                        <option defaultValue></option>
                         {cityState.map((item, index) => (
                             <option key={index}>{item}</option>
                         ))}
@@ -162,11 +162,11 @@ const Signin = ({ parentCallback }) => {
                 <Form.Group className="mb-3" >
                     <Form.Label className="text-white fs-5">محل تولد</Form.Label>
                     <Form.Select
-                        className="text-end inputs text-white"
+                        className="text-end inputs"
                         onChange={(e) => setUser(prev => ({ ...prev, locOfBirth: e.target.value }))}
                         required
                     >
-                        <option selected></option>
+                        <option defaultValue ></option>
                         {Object.keys(city).map((item, i) => {
                             return <option key={i}>{item}</option>
                         })}
@@ -176,7 +176,7 @@ const Signin = ({ parentCallback }) => {
                 <Form.Group className="mb-3" >
                     <Form.Label className="text-white fs-5">مدرک تحصیلی</Form.Label>
                     <Form.Select
-                        className="text-end inputs text-white"
+                        className="text-end inputs"
                         onChange={(e) => {
                             openSelectTag()
                             setUser(prev => ({ ...prev, education: e.target.value }))}
@@ -192,10 +192,10 @@ const Signin = ({ parentCallback }) => {
                 {showTag && <Form.Group className="mb-3" >
                     <Form.Label className="text-white fs-5">محل تحصیل</Form.Label>
                     <Form.Select
-                        className="text-end inputs text-white"
+                        className="text-end inputs"
                         onChange={(e) => setUser(prev => ({ ...prev, locOfEducation: e.target.value }))}
                         required>
-                        <option selected></option>
+                        <option defaultValue></option>
                         {Object.keys(city).map((item, i) => {
                             return <option className="inputs" key={i}>{item}</option>
                         }) }
@@ -209,7 +209,9 @@ const Signin = ({ parentCallback }) => {
                 handleShow={() => handleShow()}
                 handleClose={() => handleClose()}
                 show={show}
-                massages="ثبت نام با موفقیت انجام شد"
+                className="succsess"        
+                massages="موفقیت"
+                bodyMassages="عملیات با موفقیت انجام شد"
             />
         </div>
     )

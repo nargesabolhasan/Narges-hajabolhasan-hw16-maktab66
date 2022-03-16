@@ -1,7 +1,7 @@
 import { Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
-import { React, useState } from 'react';
+import { React, useState, memo} from 'react';
 
 
 const ShowPassword = (props) => {
@@ -32,4 +32,4 @@ const ShowPassword = (props) => {
   )
 }
 
-export default ShowPassword
+export default memo(ShowPassword)
