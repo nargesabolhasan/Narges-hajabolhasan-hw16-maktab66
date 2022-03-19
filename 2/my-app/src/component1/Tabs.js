@@ -31,18 +31,18 @@ const Tabs = () => {
         setselectedTAb(index)
     }
     //----handle Login ------
-    const handleLogin = useCallback((input) => {
+    const handleLogin =(input) => {
         setLogin(input);
         checkUser()
-    });
+    };
     //----check pass and email is valid------
-    const checkUser = () => {
-        signin.map((item, index) => {
+    const checkUser =useCallback( () => {
+        signin.forEach(item=> {
             let arrayOfSignin = Object.values(item)
-            arrayOfSignin.includes(login.password,login.email)  ?
+            arrayOfSignin.includes(login.password,login.email) ?
             handleShow('خوش آمدید', 'succsess') : handleShow('رمز یا پست الکترونیک اشتباه است', 'failer')
         })
-    }
+    },[login])
     //-----show & close modal-------
     const handleShow = (text, style) => {
         setShow(true)
@@ -53,7 +53,7 @@ const Tabs = () => {
     const handleSignin = useCallback((input) => {
         const newSignin = [...signin, input];
         setSignin(newSignin);
-    });
+    },[signin]);
     //----close modal-------
     const handleClose = () => {
         setShow(false)

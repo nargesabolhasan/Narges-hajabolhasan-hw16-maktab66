@@ -1,13 +1,16 @@
-import { React, useState, useEffect, useRef } from 'react';
+import { React, useState, useEffect, useRef,memo } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import  Modals from '../Modal/Modal';
+import Modals from '../Modal/Modal';
 import ShowPassword from '../ShowPassword/ShowPassword';
 
 
 const Signin = ({ parentCallback }) => {
     //..........declared ref..........//
     const selectInput2 = useRef(null);
+    //..........declared ref..........//
+    const form = useRef(null);
+
     //**state for validation form **//
     const [city, setCity] = useState({});
     //**state for selected city **//
@@ -44,6 +47,7 @@ const Signin = ({ parentCallback }) => {
         if (form.checkValidity() === false) {
             event.stopPropagation();
         } else {
+            setShowTag(false)
             handleShow()
             parentCallback(user)
             setUser(
@@ -55,7 +59,7 @@ const Signin = ({ parentCallback }) => {
                     education: '',
                     locOfEducation: '',
                     city: '',
-                    locOfBirth:''
+                    locOfBirth: ''
                 }
             )
         }
@@ -81,13 +85,14 @@ const Signin = ({ parentCallback }) => {
         }
     }
     //------open select tag-----------
-    const openSelectTag=()=>{
+    const openSelectTag = () => {
         setShowTag(true)
     }
     return (
         <div className="col-8 mx-auto">
             <h1 className="text-center">رایگان ثبت نام کنید  </h1>
             <Form
+                ref={form}
                 className='text-end '
                 noValidate
                 validated={validated}
@@ -140,14 +145,14 @@ const Signin = ({ parentCallback }) => {
                         }
                         }
                     >
-                         <option defaultValue></option>
+                        <option defaultValue></option>
                         {Object.keys(city).map((item, i) => {
                             return <option key={i}>{item}</option>
                         })}
                     </Form.Select >
                 </Form.Group>
                 <Form.Group className="mb-3" >
-                    <Form.Label className="text-white fs-5">شهرستان</Form.Label>
+                    <Form.Label className="text-white fs-5">(ابتدا استان انتخاب شود)شهرستان</Form.Label>
                     <Form.Select
                         ref={selectInput2}
                         className="text-end inputs"
@@ -179,8 +184,9 @@ const Signin = ({ parentCallback }) => {
                         className="text-end inputs"
                         onChange={(e) => {
                             openSelectTag()
-                            setUser(prev => ({ ...prev, education: e.target.value }))}
-                            } >
+                            setUser(prev => ({ ...prev, education: e.target.value }))
+                        }
+                        } >
                         <option></option>
                         <option>دیپلم</option>
                         <option> کارشناسی پیوسته </option>
@@ -198,7 +204,7 @@ const Signin = ({ parentCallback }) => {
                         <option defaultValue></option>
                         {Object.keys(city).map((item, i) => {
                             return <option className="inputs" key={i}>{item}</option>
-                        }) }
+                        })}
                     </Form.Select>
                 </Form.Group>}
                 <Button className="col-12 buttons" variant="primary" type="submit">
@@ -209,7 +215,7 @@ const Signin = ({ parentCallback }) => {
                 handleShow={() => handleShow()}
                 handleClose={() => handleClose()}
                 show={show}
-                className="succsess"        
+                className="succsess"
                 massages="موفقیت"
                 bodyMassages="عملیات با موفقیت انجام شد"
             />
@@ -217,4 +223,4 @@ const Signin = ({ parentCallback }) => {
     )
 }
 
-export default Signin
+export default memo(Signin)
