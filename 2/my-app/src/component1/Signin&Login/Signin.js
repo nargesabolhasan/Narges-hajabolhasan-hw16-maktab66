@@ -10,7 +10,6 @@ const Signin = ({ parentCallback }) => {
     const selectInput2 = useRef(null);
     //..........declared ref..........//
     const form = useRef(null);
-
     //**state for validation form **//
     const [city, setCity] = useState({});
     //**state for selected city **//

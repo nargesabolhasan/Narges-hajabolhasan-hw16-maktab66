@@ -4,7 +4,7 @@ import TabsList from './TabsList';
 import TabsContent from './TabsContent';
 import Signin from './Signin&Login/Signin';
 import Login from './Signin&Login/Login';
-import  Modals from './Modal/Modal';
+import Modals from './Modal/Modal';
 
 const Tabs = () => {
     //**state for tabs **// 
@@ -22,27 +22,26 @@ const Tabs = () => {
     const [show, setShow] = useState(false);
     //**state for text of modal **//
     const [modalText, setModalText] = useState('');
-    //**state for text of modal **//
+    //**state for style of modal **//
     const [modalStyle, setModalStyle] = useState('');
-    
-    
+
+
     //----handleClick ------
     const handleClick = (index) => {
         setselectedTAb(index)
     }
     //----handle Login ------
-    const handleLogin =(input) => {
+    const handleLogin = (input) => {
         setLogin(input);
         checkUser()
     };
     //----check pass and email is valid------
-    const checkUser =useCallback( () => {
-        signin.forEach(item=> {
-            let arrayOfSignin = Object.values(item)
-            arrayOfSignin.includes(login.password,login.email) ?
-            handleShow('خوش آمدید', 'succsess') : handleShow('رمز یا پست الکترونیک اشتباه است', 'failer')
+    const checkUser = useCallback(() => {
+        signin.forEach(item => {
+            (item.pasword === login.password && item.email === login.email) ?
+                handleShow('خوش آمدید', 'succsess') : handleShow('رمز یا پست الکترونیک اشتباه است', 'failer')
         })
-    },[login])
+    }, [login])
     //-----show & close modal-------
     const handleShow = (text, style) => {
         setShow(true)
@@ -53,7 +52,7 @@ const Tabs = () => {
     const handleSignin = useCallback((input) => {
         const newSignin = [...signin, input];
         setSignin(newSignin);
-    },[signin]);
+    }, [signin]);
     //----close modal-------
     const handleClose = () => {
         setShow(false)
