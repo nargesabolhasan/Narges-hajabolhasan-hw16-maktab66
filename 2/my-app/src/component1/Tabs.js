@@ -42,6 +42,17 @@ const Tabs = () => {
                 handleShow('خوش آمدید', 'succsess') : handleShow('رمز یا پست الکترونیک اشتباه است', 'failer')
         })
     }, [login])
+    
+
+    // const checkUser =useCallback( () => {
+    //     signin.forEach(item=> {
+    //         let arrayOfSignin = Object.values(item)
+    //         arrayOfSignin.includes(login.password,login.email) ?
+    //         handleShow('خوش آمدید', 'succsess') : handleShow('رمز یا پست الکترونیک اشتباه است', 'failer')
+    //     })
+    // },[login])
+
+
     //-----show & close modal-------
     const handleShow = (text, style) => {
         setShow(true)
