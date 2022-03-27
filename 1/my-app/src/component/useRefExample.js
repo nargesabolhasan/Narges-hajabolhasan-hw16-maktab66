@@ -25,7 +25,7 @@ function UseRefExample() {
         <br />
         change first value:
         <input ref={input1} type="text" />
-        <Button onClick={changeValue1} children={11}/>
+        <Button onClick={changeValue1} children={change}/>
       </div>
 
       <div className="value-2"  >
@@ -33,7 +33,7 @@ function UseRefExample() {
         <br />
         change Second value:
         <input ref={input2} type="text" />
-        <Button onClick={changeValue2} children={11}/>
+        <Button onClick={changeValue2} children={change}/>
       </div>
     </div>
   );
