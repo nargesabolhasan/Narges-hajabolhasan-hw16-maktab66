@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback, memo, useRef } from "react";
+import Button from "./Button";
 
 function UseRefExample() {
   console.log("App is rendering...");
@@ -7,6 +8,7 @@ function UseRefExample() {
   const [secondInput, setSecondInput] = useState();
   let input1 = useRef();
   let input2 = useRef();
+
   const changeValue1 = useCallback(() => {
     setFirstInput(input1.current.value)
   }, [firstInput]);
@@ -23,7 +25,7 @@ function UseRefExample() {
         <br />
         change first value:
         <input ref={input1} type="text" />
-        <button type="button" onClick={changeValue1}> change </button>
+        <Button onClick={changeValue1} children={11}/>
       </div>
 
       <div className="value-2"  >
@@ -31,7 +33,7 @@ function UseRefExample() {
         <br />
         change Second value:
         <input ref={input2} type="text" />
-        <button type="button" onClick={changeValue2}> change </button>
+        <Button onClick={changeValue2} children={11}/>
       </div>
     </div>
   );
